@@ -1,18 +1,19 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
-import About     from './pages/About'
-import Analyzer  from './pages/Analyzer'
+// src/App.jsx
+import Header from './components/Header';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import About     from './pages/About';
+import Analyzer  from './pages/Analyzer';
 
 export default function App() {
   return (
-    <Routes>
-      {/* стартовая («/») — страница О сайте */}
-      <Route path="/" element={<About />} />
+    <>
+      <Header />
 
-      {/* страница с загрузкой логов */}
-      <Route path="/analyzer" element={<Analyzer />} />
-
-      {/* если ввели неизвестный путь — отправляем на корень */}
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+      <Routes>
+        <Route path="/"          element={<About />}    />
+        <Route path="/analyzer"  element={<Analyzer />} />
+        <Route path="*"          element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 }
