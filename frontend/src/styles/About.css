@@ -1,0 +1,115 @@
+:root {
+  --bg-light: #f3f4f6;
+  --bg-dark: #1f2937;
+  --card-light: white;
+  --card-dark: #374151;
+  --text-light: #1f2937;
+  --text-dark: #f3f4f6;
+}
+
+/* Светлая тема — по умолчанию */
+body {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+
+.about-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: var(--bg-light);
+  padding: 2rem 1rem;
+}
+
+.about-card {
+  background-color: var(--card-light);
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+  max-width: 800px;
+  width: 100%;
+  text-align: left;
+  line-height: 1.6;
+  color: var(--text-light);
+}
+
+.about-pre {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  font-family: monospace;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  white-space: pre-wrap;
+}
+
+.about-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  margin-top: 2rem;
+  transition: all 0.3s ease;
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: #000;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Тёмная тема — по классу .dark на body */
+body.dark {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+body.dark .about-wrapper {
+  background-color: var(--bg-dark);
+}
+
+body.dark .about-card {
+  background-color: var(--card-dark);
+  color: var(--text-dark);
+  box-shadow: none;
+}
+
+body.dark .about-pre {
+  background-color: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+body.dark .about-button {
+  background-color: #3b82f6;
+  color: #fff;
+}
+
+body.dark .about-button:hover {
+  background-color: #2563eb;
+}
+
+body.dark .glass-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.theme-toggle-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 0.5rem;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
