@@ -23,7 +23,7 @@ function FileUploadPanel() {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            setGroupedData(res.data) // Пока просто отображаем raw
+            setGroupedData(res.data)
         } catch (err) {
             console.error('Ошибка загрузки:', err)
         } finally {
@@ -32,12 +32,12 @@ function FileUploadPanel() {
     }
 
     return (
-        <div className="bg-white p-6 rounded-xl shadow-md w-full max-w-2xl">
+        <div className="file-upload-panel">
             <Title level={4}>Загрузка логов</Title>
 
             <Upload
                 multiple
-                beforeUpload={() => false} // Не загружаем сразу
+                beforeUpload={() => false}
                 onChange={({ fileList }) => setFileList(fileList)}
                 fileList={fileList}
             >
@@ -61,11 +61,9 @@ function FileUploadPanel() {
             {loading && <Spin tip="Обработка файлов..." />}
 
             {groupedData && (
-                <div className="mt-4">
+                <div className="result">
                     <Title level={5}>Результат:</Title>
-                    <pre className="bg-gray-100 p-2 rounded text-sm overflow-auto">
-                        {JSON.stringify(groupedData, null, 2)}
-                    </pre>
+                    <pre>{JSON.stringify(groupedData, null, 2)}</pre>
                 </div>
             )}
         </div>
