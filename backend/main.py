@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from backend.routers.file_upload import r as test_router
+from backend.routers.init import r as init_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -12,4 +12,4 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
 )
-app.include_router(test_router)
+app.include_router(init_router)

@@ -1,26 +1,20 @@
 import pandas as pd
-import os
-import rarfile
 import re
+from typing import List, Dict
 
 
 class LogAnalyzer:
     def __init__(self):
-        # Регулярное выражение для поиска ошибок
         self.error_regex = re.compile(
             r'(error|failed|fatal|abort|crash|cannot|undefined reference)',
             re.IGNORECASE
         )
-
-        # Фильтр ложных срабатываний
         self.noise_filter = re.compile(
             r'installed|added|found|skipped|done|warning',
             re.IGNORECASE
         )
-
-        # Настройки контекста
-        self.context_before = 2  # Чанков до ошибки
-        self.context_after = 5  # Чанков после ошибки
+        self.context_before = 2
+        self.context_after = 5
 
     def preprocess_log(self, log_line: str) -> str:
         error_blocks = []
@@ -35,15 +29,10 @@ class LogAnalyzer:
                 continue
 
             if self.error_regex.search(chunk):
-                # Определяем границы контекста
                 start = max(0, i - self.context_before)
                 end = min(len(chunks), i + self.context_after + 1)
-
-                # Собираем контекст
                 context = chunks[start:end]
                 error_blocks.append(" ".join(context).strip())
-
-                # Пропускаем обработанные чанки
                 i = end
             else:
                 i += 1
@@ -51,31 +40,13 @@ class LogAnalyzer:
         return "\n".join(error_blocks) if error_blocks else ""
 
 
-def parse_files_to_dataframe(upload_dir: str) -> pd.DataFrame:
-    entries = []
+def parse_logs_from_memory(logs: List[Dict[str, str]]) -> pd.DataFrame:
     analyzer = LogAnalyzer()
-    for filename in os.listdir(upload_dir):
-        path = os.path.join(upload_dir, filename)
-
-        if filename.endswith(".txt"):
-            with open(path, "r", encoding="utf-8", errors="ignore") as f:
-                log = analyzer.preprocess_log(f.read())
-                print(log)
-                entries.append({
-                    "filename": filename,
-                    "error": log
-                })
-        elif filename.endswith(".rar"):
-            with rarfile.RarFile(path) as archive:
-                for member in archive.infolist():
-                    if member.filename.endswith(".txt"):
-                        with archive.open(member) as file:
-                            entries.append({
-                                "filename": f"{filename}::{member.filename}",
-                                "error": file.read().decode("utf-8", errors="ignore")
-                            })
+    entries = []
+    for item in logs:
+        cleaned = analyzer.preprocess_log(item["error"])
+        entries.append({
+            "filename": item["filename"],
+            "error": cleaned
+        })
     return pd.DataFrame(entries)
-
-
-analyzer = LogAnalyzer()
-print(analyzer.preprocess_log(""))
