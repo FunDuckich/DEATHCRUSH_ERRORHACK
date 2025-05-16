@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+:root {
+  --header-bg: #ffffff;
+  --link-color: #333;
+  --link-active: #0066cc;
+}
+
+body.dark {
+  --header-bg: #1e1e1e;
+  --link-color: #ddd;
+  --link-active: #4dabf7;
+}

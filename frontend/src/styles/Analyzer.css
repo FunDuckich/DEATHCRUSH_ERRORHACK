@@ -1,0 +1,54 @@
+:root {
+  --transition-speed: 0.3s;
+}
+
+.analyzer-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-light);
+  padding: 2rem;
+  transition: background-color var(--transition-speed) ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-light);
+}
+
+body.dark .analyzer-wrapper {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+.analyzer-content {
+  background-color: var(--card-light);
+  padding: 2rem 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  width: 100%;
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  color: var(--text-light);
+}
+
+body.dark .analyzer-content {
+  background-color: var(--card-dark);
+  color: var(--text-dark);
+}
+
+.analyzer-title {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .analyzer-content {
+    padding: 1.5rem 1.5rem;
+  }
+
+  .analyzer-title {
+    font-size: 1.5rem;
+  }
+}
