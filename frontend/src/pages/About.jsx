@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import {
@@ -7,15 +6,11 @@ import {
 import '../styles/About.css'
 
 export default function About() {
-  const navigate = useNavigate()
-
-  // Загружаем тему из localStorage или берём false по умолчанию
   const [darkMode, setDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem('darkMode')
     return savedTheme === 'true'
   })
 
-  // При изменении темы: меняем класс на body и сохраняем в localStorage
   useEffect(() => {
     document.body.classList.toggle('dark', darkMode)
     localStorage.setItem('darkMode', darkMode)
@@ -41,14 +36,8 @@ export default function About() {
         variants={fadeIn}
         custom={0}
       >
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-          <button onClick={toggleTheme} className="theme-toggle-button">
-            {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
-          </button>
-        </div>
 
         <h1 className="about-title">📊 LogClust — Интеллектуальный анализ и кластеризация логов</h1>
-
 
         <motion.div variants={fadeIn} custom={1}>
           <h2><FiSearch /> Что делает наш сервис?</h2>
@@ -106,16 +95,6 @@ export default function About() {
             <li>Файлы обрабатываются локально и не сохраняются дольше сессии</li>
             <li>Можно развернуть внутри корпоративной сети</li>
           </ul>
-        </motion.div>
-
-
-        <motion.div variants={fadeIn} custom={6}>
-          <button
-            onClick={() => navigate('/analyzer')}
-            className="about-button glass-button"
-          >
-            Перейти к анализу логов
-          </button>
         </motion.div>
       </motion.div>
     </div>
