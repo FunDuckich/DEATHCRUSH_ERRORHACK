@@ -18,6 +18,14 @@ BRANCH = "sisyphus"
 
 class ErrorEntry(BaseModel):
     filename: str
+    hash: str
+    epoch: int
+    version: str
+    release: str
+    arch: str
+    updated: str
+    ftbfs_since: str
+    url: str
     error: str
 
 
@@ -55,7 +63,9 @@ async def init_analyzer():
 
         logs = await asyncio.gather(*tasks)
         logs_texts = [
-            {"filename": entry["name"], "error": log_text}
+            {"filename": entry["name"], "hash": entry["hash"], "epoch": entry["epoch"],
+             "version": entry["version"], "release": entry["release"], "arch": entry["arch"],
+             "updated": entry["updated"], "ftbfs_since": entry["ftbfs_since"],"url": entry["url"], "error": log_text}
             for entry, log_text in zip(ftbfs, logs) if log_text is not None
         ]
 

@@ -91,7 +91,9 @@ def parse_logs_from_memory(logs: List[Dict[str, str]]) -> pd.DataFrame:
     for item in logs:
         cleaned = analyzer.preprocess_log(item["error"])
         entries.append({
-            "filename": item["filename"],
+            "filename": item["filename"], "hash": item["hash"], "epoch": item["epoch"],
+            "version": item["version"], "release": item["release"], "arch": item["arch"],
+            "updated": item["updated"], "ftbfs_since": item["ftbfs_since"], "url": item["url"],
             "error": cleaned
         })
     return pd.DataFrame(entries)
