@@ -1,23 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import {
-  FiSearch, FiCheckCircle, FiUpload, FiShield, FiSettings, FiSun, FiMoon
+  FiSearch, FiCheckCircle, FiUpload, FiShield, FiSettings
 } from 'react-icons/fi'
 import '../styles/About.css'
 
-export default function About() {
-  const [darkMode, setDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem('darkMode')
-    return savedTheme === 'true'
-  })
-
-  useEffect(() => {
-    document.body.classList.toggle('dark', darkMode)
-    localStorage.setItem('darkMode', darkMode)
-  }, [darkMode])
-
-  const toggleTheme = () => setDarkMode(prev => !prev)
-
+export default function About({ darkMode }) {
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: (i) => ({
@@ -36,7 +24,6 @@ export default function About() {
         variants={fadeIn}
         custom={0}
       >
-
         <h1 className="about-title">LogClust</h1>
 
         <motion.div variants={fadeIn} custom={1}>
@@ -45,18 +32,15 @@ export default function About() {
             <strong>LogClust</strong> — это веб-сервис, который автоматически анализирует загруженные логи, 
             выявляет схожие ошибки и группирует их в кластеры. Сервис поддерживает загрузку одного или 
             нескольких лог-файлов в формате <code>.txt</code> или архивов <code>.rar</code>. 
-            Пользователь получает удобную визуализацию: список кластеров с возможностью 
-            просмотреть названия логов, отнесённых к каждому кластеру.
+            На основе полученных данных, сервис строит удобную и понятную визуализацию кластеров классов ошибок.
           </p>
         </motion.div>
 
         <motion.div variants={fadeIn} custom={2}>
           <h2><FiCheckCircle /> Ключевые функции</h2>
           <ul className="about-list">
-            <li>Загрузка множества файлов логов (.txt, .rar)</li>
-            <li>Автоматическая распаковка и предварительная обработка файлов</li>
-            <li>Кластеризация логов с помощью алгоритмов машинного обучения</li>
-            <li>Отображение списка кластеров ошибок</li>
+            <li>Загрузка множества логов с автоматической распаковкой и предобработкой</li>
+            <li>Кластеризация логов и отображением списка кластеров ошибок</li>
             <li>Просмотр логов, входящих в конкретный кластер</li>
             <li>Удобный и быстрый веб-интерфейс</li>
           </ul>
