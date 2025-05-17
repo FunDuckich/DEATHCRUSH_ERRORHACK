@@ -1,22 +1,10 @@
-import { useEffect, useState } from 'react'
-import './ThemeSwitcher.css'
+// src/components/ThemeSwitcher.jsx
+import React, { useContext } from 'react';
+import { ThemeContext } from '../ThemeContext';
+import './ThemeSwitcher.css';
 
 export default function ThemeSwitcher() {
-  const [theme, setTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('theme')
-    if (savedTheme === 'dark' || savedTheme === 'light') return savedTheme
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark'
-    return 'light'
-  })
-
-  useEffect(() => {
-    document.body.classList.toggle('dark', theme === 'dark')
-    localStorage.setItem('theme', theme)
-  }, [theme])
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'light' ? 'dark' : 'light'))
-  }
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
     <div className="toggle-wrapper">
@@ -30,5 +18,5 @@ export default function ThemeSwitcher() {
         <span className="slider" />
       </label>
     </div>
-  )
+  );
 }
