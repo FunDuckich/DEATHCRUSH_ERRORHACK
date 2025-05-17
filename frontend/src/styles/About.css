@@ -5,8 +5,15 @@
   --card-dark: #374151;
   --text-light: #1f2937;
   --text-dark: #f3f4f6;
+  --pre-bg-light: #f9fafb;
+  --pre-bg-dark: #1e293b;
+  --pre-border-light: #e5e7eb;
+  --pre-border-dark: #334155;
+  --list-light: #1f2937;
+  --list-dark: #e0e7ff;
 }
 
+/* Сброс и базовые стили */
 * {
   box-sizing: border-box;
 }
@@ -26,6 +33,7 @@ body {
   align-items: flex-start;
   background-color: var(--bg-light);
   padding: 2rem 1rem;
+  transition: background-color 0.3s;
 }
 
 .about-card {
@@ -36,17 +44,27 @@ body {
   max-width: 800px;
   width: 100%;
   line-height: 1.6;
+  color: var(--text-light);
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
 .about-pre {
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background-color: var(--pre-bg-light);
+  border: 1px solid var(--pre-border-light);
   border-radius: 0.5rem;
   padding: 1rem;
   font-family: monospace;
   font-size: 0.95rem;
   margin-bottom: 1rem;
   white-space: pre-wrap;
+  color: var(--text-light);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.about-list {
+  color: var(--list-light);
+  margin-left: 1.25rem;
+  transition: color 0.3s;
 }
 
 /* Тёмная тема */
@@ -66,17 +84,11 @@ body.dark .about-card {
 }
 
 body.dark .about-pre {
-  background-color: #1e293b;
-  color: #e2e8f0;
-  border-color: #334155;
+  background-color: var(--pre-bg-dark);
+  color: var(--text-dark);
+  border-color: var(--pre-border-dark);
 }
 
-.theme-toggle-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: inherit;
-  font-size: 1rem;
-  padding: 0.5rem;
-  transition: color 0.3s ease;
+body.dark .about-list {
+  color: var(--list-dark);
 }

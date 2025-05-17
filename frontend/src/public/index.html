@@ -1,0 +1,12 @@
+<script>
+  try {
+    const theme = localStorage.getItem('theme');
+    if (theme === 'dark') {
+      document.body.classList.add('dark');
+    } else if (theme === 'light') {
+      document.body.classList.remove('dark');
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.body.classList.add('dark');
+    }
+  } catch {}
+</script>
