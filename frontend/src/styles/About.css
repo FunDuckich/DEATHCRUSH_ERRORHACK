@@ -199,8 +199,8 @@ body.dark .about-pre {
 }
 
 .block-tip {
-  background: rgba(16, 185, 129, 0.1);
-  border-left: 4px solid #10b981;
+  background: rgba(236, 72, 153, 0.1);
+  border-left: 4px solid #ec4899;
   padding: 0.75rem 1rem;
   margin: 1rem 0;
   border-radius: 12px;
@@ -212,4 +212,76 @@ body.dark .about-pre {
   margin-right: 0.6rem;
   color: var(--accent-1);
   font-size: 0.9rem;
+}
+/* ==== Цветовая схема =================================================== */
+:root {
+  --accent-1: #6366f1;         /* indigo-500  */
+  --accent-2: #ec4899;         /* fuchsia-500 */
+  --bg-light: #f8fafc;         /* slate-50    */
+  --bg-dark: #0f172a;          /* slate-900   */
+
+  --card-light: rgba(255,255,255,0.7);
+  --card-dark: rgba(30,41,59,0.55);
+
+  --text-light: #334155;       /* slate-700   */
+  --text-dark: #f1f5f9;        /* slate-100   */
+
+  --border-light: rgba(0,0,0,.06);
+  --border-dark: rgba(255,255,255,.08);
+
+  /* Переменные для кнопки */
+  --btn-bg-light: white;
+  --btn-bg-dark: var(--card-dark);
+
+  --btn-color-light: var(--accent-1);
+  --btn-color-dark: var(--text-dark);
+
+  --btn-border-light: var(--accent-1);
+  --btn-border-dark: var(--text-dark);
+
+  --btn-shadow-light: rgba(236, 72, 153, 0.5);
+  --btn-shadow-dark: rgba(236, 72, 153, 0.7);
+
+  --btn-hover-bg-light: #7c3aed; /* мягкий фиолетовый */
+  --btn-hover-bg-dark: #FFFFFF;  /* темный фиолетовый */
+}
+
+/* ==== Кнопка с использованием переменных ================================== */
+.analyze-btn {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 2px solid var(--btn-border-light);
+  background-color: var(--btn-bg-light);
+  color: var(--btn-color-light);
+  box-shadow: 0 4px 8px var(--btn-shadow-light);
+  transition: 
+    background-color 0.3s ease, 
+    color 0.3s ease, 
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+  text-align: left; 
+}
+
+.analyze-btn:hover {
+  background-color: var(--btn-hover-bg-light);
+  color: white;
+  box-shadow: 0 6px 15px var(--btn-shadow-light);
+  transform: translateX(4px);
+}
+
+/* ==== Стили для тёмной темы ================================================ */
+body.dark .analyze-btn {
+  border-color: var(--btn-border-dark);
+  background-color: var(--btn-bg-dark);
+  color: var(--btn-color-dark);
+  box-shadow: 0 4px 8px var(--btn-shadow-dark);
+}
+
+body.dark .analyze-btn:hover {
+  background-color: var(--btn-hover-bg-dark);
+  color: var(--text-light);
+  box-shadow: 0 6px 15px var(--btn-shadow-dark);
 }
