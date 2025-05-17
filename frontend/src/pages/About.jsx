@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext} from 'react' // useContext уже импортирован
 import {useNavigate} from 'react-router-dom'
 import {motion} from 'framer-motion'
 import {
@@ -9,11 +9,14 @@ import {
     FiUsers,
 } from 'react-icons/fi'
 import '../styles/About.css'
-import {AnalysisContext} from '../AnalysisContext' // 👈 импорт контекста
+import {AnalysisContext} from '../AnalysisContext'
+// import { ThemeContext } from '../ThemeContext'; // Если потребуется доступ к теме для логики
 
-export default function About({darkMode}) {
+// Убираем darkMode из props
+export default function About() {
     const navigate = useNavigate()
-    const {updateAnalysis} = useContext(AnalysisContext) // 👈 используем контекст
+    const {updateAnalysis} = useContext(AnalysisContext)
+    // const { theme } = useContext(ThemeContext); // Если нужно знать текущую тему
 
     const fadeIn = {
         hidden: {opacity: 0, y: 24},
@@ -34,8 +37,8 @@ export default function About({darkMode}) {
             const res = await fetch('http://localhost:8000/analyze')
             if (!res.ok) throw new Error(`Ошибка: ${res.status}`)
             const json = await res.json()
-            updateAnalysis(json) // ✅ сохраняем в контекст
-            navigate('/analyzer') // ✅ переходим
+            updateAnalysis(json)
+            navigate('/analyzer')
         } catch (err) {
             setError(err.message)
         } finally {
@@ -44,7 +47,8 @@ export default function About({darkMode}) {
     }
 
     return (
-        <div className={`about-wrapper${darkMode ? ' dark' : ''}`}>
+        // Убираем darkMode ? ' dark' : '' из className, так как ThemeContext управляет этим через body
+        <div className="about-wrapper">
             <motion.section
                 className="about-card glass"
                 initial="hidden"

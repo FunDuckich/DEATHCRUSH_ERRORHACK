@@ -2,15 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
-  --header-bg: #ffffff;
-  --link-color: #333;
-  --link-active: #0066cc;
+    /* === Глобальные переменные темы === */
+
+    /* Акцентные цвета */
+    --accent-1: #6366f1; /* indigo-500 */
+    --accent-2: #ec4899; /* fuchsia-500 */
+
+    /* Основные цвета для Светлой Темы */
+    --bg-light: #f8fafc; /* slate-50 (основной фон страницы) */
+    --text-light: #334155; /* slate-700 (основной цвет текста) */
+    --card-bg-light: rgba(255, 255, 255, 0.75); /* фон для "стеклянных" карточек */
+    --card-border-light: rgba(0, 0, 0, 0.08);
+    --subtle-bg-light: rgba(0, 0, 0, 0.03); /* для легкого фона элементов, как в Analyzer.css .cluster */
+
+    /* Переменные для Header (Светлая Тема) */
+    --header-bg-light: rgba(255, 255, 255, 0.8); /* Белый с прозрачностью для блюра */
+    --link-color-light: #333333;
+    --link-active-light: #0066cc;
+
+    /* Переменные для кнопки Analyze (Светлая Тема) - если используется глобально или в нескольких местах */
+    /* Если кнопка уникальна для About, эти переменные можно оставить в About.css */
+    --btn-main-bg-light: white;
+    --btn-main-text-light: var(--accent-1);
+    --btn-main-border-light: var(--accent-1);
+    --btn-main-shadow-light: rgba(236, 72, 153, 0.4); /* тень от accent-2 */
+    --btn-main-hover-bg-light: #5a58e4; /* Чуть темнее/насыщеннее accent-1 */
+    --btn-main-hover-text-light: white;
 }
 
 body.dark {
-  --header-bg: #1e1e1e;
-  --link-color: #ddd;
-  --link-active: #4dabf7;
+    /* Основные цвета для Темной Темы */
+    --bg-dark: #0f172a; /* slate-900 */
+    --text-dark: #f1f5f9; /* slate-100 */
+    --card-bg-dark: rgba(30, 41, 59, 0.65); /* фон для "стеклянных" карточек в темной теме */
+    --card-border-dark: rgba(255, 255, 255, 0.1);
+    --subtle-bg-dark: rgba(255, 255, 255, 0.05); /* для легкого фона элементов */
+
+    /* Переменные для Header (Темная Тема) */
+    --header-bg-dark: rgba(30, 30, 30, 0.8); /* Темно-серый с прозрачностью */
+    --link-color-dark: #dddddd;
+    --link-active-dark: #4dabf7;
+
+    /* Переменные для кнопки Analyze (Темная Тема) */
+    --btn-main-bg-dark: var(--card-bg-dark); /* или чуть светлее фона карточки */
+    --btn-main-text-dark: var(--text-dark);
+    --btn-main-border-dark: var(--text-dark); /* или var(--accent-1) если нужен цветной бордер */
+    --btn-main-shadow-dark: rgba(236, 72, 153, 0.5); /* тень от accent-2 */
+    --btn-main-hover-bg-dark: var(--accent-1);
+    --btn-main-hover-text-dark: white;
+}
+
+/* Применение глобальных переменных фона и текста к body */
+body {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    font-family: 'Inter', 'Montserrat', sans-serif; /* Задаем базовый шрифт здесь */
+    line-height: 1.65;
+    transition: background-color 0.4s, color 0.4s;
+    overflow-x: hidden;
+}
+
+body.dark {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
 }
