@@ -9,9 +9,10 @@ export default function Header() {
     [
       'px-3 py-2 rounded-lg transition-colors',
       isActive
-        ? 'font-semibold text-blue-600 dark:text-blue-400'
+        ? 'font-semibold text-blue-600 dark:text-blue-400 active'
         : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400',
     ].join(' ');
+
 
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between gap-6

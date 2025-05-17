@@ -1,94 +1,287 @@
+/* ==== Цветовая схема =================================================== */
 :root {
-  --bg-light: #f3f4f6;
-  --bg-dark: #1f2937;
-  --card-light: white;
-  --card-dark: #374151;
-  --text-light: #1f2937;
-  --text-dark: #f3f4f6;
-  --pre-bg-light: #f9fafb;
-  --pre-bg-dark: #1e293b;
-  --pre-border-light: #e5e7eb;
-  --pre-border-dark: #334155;
-  --list-light: #1f2937;
-  --list-dark: #e0e7ff;
+  --accent-1: #6366f1;         /* indigo-500  */
+  --accent-2: #ec4899;         /* fuchsia-500 */
+  --bg-light: #f8fafc;         /* slate-50    */
+  --bg-dark: #0f172a;          /* slate-900   */
+
+  --card-light: rgba(255,255,255,0.7);
+  --card-dark: rgba(30,41,59,0.55);
+
+  --text-light: #334155;       /* slate-700   */
+  --text-dark: #f1f5f9;        /* slate-100   */
+
+  --border-light: rgba(0,0,0,.06);
+  --border-dark: rgba(255,255,255,.08);
 }
 
-/* Сброс и базовые стили */
-* {
-  box-sizing: border-box;
-}
+/* ==== Сброс/база ======================================================= */
+*,
+*::before,
+*::after { box-sizing: border-box; }
 
 body {
-  background-color: var(--bg-light);
-  color: var(--text-light);
-  font-family: 'Montserrat', sans-serif;
   margin: 0;
-  transition: background-color 0.3s, color 0.3s;
+  font-family: 'Inter', 'Montserrat', sans-serif;
+  background: var(--bg-light);
+  color: var(--text-light);
+  line-height: 1.65;
+  transition: background .4s, color .4s;
+  overflow-x: hidden;           /* без горизонтального скролла */
 }
 
+body.dark {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* ==== Градиентная подложка ============================================ */
 .about-wrapper {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background-color: var(--bg-light);
-  padding: 2rem 1rem;
-  transition: background-color 0.3s;
+  padding: 5rem 1rem 3rem;
+  position: relative;
+  z-index: 0;
 }
 
+.about-wrapper::before,
+.about-wrapper::after {
+  content: '';
+  position: absolute;
+  width: 650px;
+  height: 650px;
+  border-radius: 50%;
+  filter: blur(150px);
+  z-index: -1;
+  opacity: .65;
+  transition: opacity .5s;
+}
+
+.about-wrapper::before {
+  top: -240px;
+  left: -180px;
+  background: var(--accent-1);
+}
+
+.about-wrapper::after {
+  bottom: -240px;
+  right: -180px;
+  background: var(--accent-2);
+}
+
+body.dark .about-wrapper::before,
+body.dark .about-wrapper::after {
+  opacity: .4;
+}
+
+/* ==== «Стеклянная» карточка =========================================== */
 .about-card {
-  background-color: var(--card-light);
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  padding: 2.5rem;
-  max-width: 800px;
   width: 100%;
-  line-height: 1.6;
-  color: var(--text-light);
-  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-}
-
-.about-pre {
-  background-color: var(--pre-bg-light);
-  border: 1px solid var(--pre-border-light);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  font-family: monospace;
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-  white-space: pre-wrap;
-  color: var(--text-light);
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-
-.about-list {
-  color: var(--list-light);
-  margin-left: 1.25rem;
-  transition: color 0.3s;
-}
-
-/* Тёмная тема */
-body.dark {
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
-}
-
-body.dark .about-wrapper {
-  background-color: var(--bg-dark);
+  max-width: 860px;
+  padding: 3rem 2.5rem 2.5rem;
+  border-radius: 24px;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  background: var(--card-light);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 18px 36px rgba(0,0,0,.08);
+  transition: background .4s, border .4s;
 }
 
 body.dark .about-card {
-  background-color: var(--card-dark);
-  color: var(--text-dark);
-  box-shadow: none;
+  background: var(--card-dark);
+  border-color: var(--border-dark);
+  box-shadow: 0 16px 32px rgba(0,0,0,.3);
+}
+
+/* ==== Заголовки / текст =============================================== */
+.about-title {
+  margin: 0 0 2rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-align: center;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  background-clip: text;            /* NEW - для Firefox */
+  -webkit-background-clip: text;    /* уже был  */
+  -webkit-text-fill-color: transparent;
+  color: transparent;               /* NEW - fallback */
+}
+
+.about-block + .about-block {
+  margin-top: 2.5rem;
+}
+
+.about-block h2 {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.ic {              /* иконки из react-icons */
+  flex-shrink: 0;
+  font-size: 1.4em;
+  stroke-width: 2.3;
+}
+
+/* малый подзаголовок (пример интерфейса) */
+.subtitle {
+  margin: 1.2rem 0 .5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  opacity: .8;
+}
+
+/* ==== Списки / подсветка ============================================== */
+.about-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.about-list li {
+  position: relative;
+  margin: .45rem 0;
+  padding-left: .3rem;
+}
+
+.about-list li::marker {        /* красивые маркеры вместо стандартных */
+  color: var(--accent-1);
+  font-size: .95em;
+}
+
+/* ==== Пример (pre) ==================================================== */
+.about-pre {
+  margin: 0 0 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 16px;
+  background: rgba(0,0,0,.04);
+  border: 1px solid rgba(0,0,0,.06);
+  font-size: .9rem;
+  font-family: 'JetBrains Mono', monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  transition: background .4s, border .4s;
 }
 
 body.dark .about-pre {
-  background-color: var(--pre-bg-dark);
-  color: var(--text-dark);
-  border-color: var(--pre-border-dark);
+  background: rgba(255,255,255,.05);
+  border-color: rgba(255,255,255,.1);
 }
 
-body.dark .about-list {
-  color: var(--list-dark);
+/* ==== Hover / фокус-эффекты =========================================== */
+.about-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px rgba(0,0,0,.12);
+}
+
+.about-card:focus-within {
+  outline: 3px solid var(--accent-1);
+  outline-offset: 2px;
+}
+
+
+.highlight {
+  font-weight: 600;
+  color: var(--accent-1);
+}
+
+.block-highlight {
+  background: rgba(99, 102, 241, 0.1);
+  border-left: 4px solid var(--accent-1);
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  border-radius: 12px;
+}
+
+.block-tip {
+  background: rgba(236, 72, 153, 0.1);
+  border-left: 4px solid #ec4899;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  border-radius: 12px;
+  font-size: 0.95rem;
+}
+
+.about-list li::before {
+  content: "✔️";
+  margin-right: 0.6rem;
+  color: var(--accent-1);
+  font-size: 0.9rem;
+}
+/* ==== Цветовая схема =================================================== */
+:root {
+  --accent-1: #6366f1;         /* indigo-500  */
+  --accent-2: #ec4899;         /* fuchsia-500 */
+  --bg-light: #f8fafc;         /* slate-50    */
+  --bg-dark: #0f172a;          /* slate-900   */
+
+  --card-light: rgba(255,255,255,0.7);
+  --card-dark: rgba(30,41,59,0.55);
+
+  --text-light: #334155;       /* slate-700   */
+  --text-dark: #f1f5f9;        /* slate-100   */
+
+  --border-light: rgba(0,0,0,.06);
+  --border-dark: rgba(255,255,255,.08);
+
+  /* Переменные для кнопки */
+  --btn-bg-light: white;
+  --btn-bg-dark: var(--card-dark);
+
+  --btn-color-light: var(--accent-1);
+  --btn-color-dark: var(--text-dark);
+
+  --btn-border-light: var(--accent-1);
+  --btn-border-dark: var(--text-dark);
+
+  --btn-shadow-light: rgba(236, 72, 153, 0.5);
+  --btn-shadow-dark: rgba(236, 72, 153, 0.7);
+
+  --btn-hover-bg-light: #7c3aed; /* мягкий фиолетовый */
+  --btn-hover-bg-dark: #FFFFFF;  /* темный фиолетовый */
+}
+
+/* ==== Кнопка с использованием переменных ================================== */
+.analyze-btn {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 2px solid var(--btn-border-light);
+  background-color: var(--btn-bg-light);
+  color: var(--btn-color-light);
+  box-shadow: 0 4px 8px var(--btn-shadow-light);
+  transition: 
+    background-color 0.3s ease, 
+    color 0.3s ease, 
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+  text-align: left; 
+}
+
+.analyze-btn:hover {
+  background-color: var(--btn-hover-bg-light);
+  color: white;
+  box-shadow: 0 6px 15px var(--btn-shadow-light);
+  transform: translateX(4px);
+}
+
+/* ==== Стили для тёмной темы ================================================ */
+body.dark .analyze-btn {
+  border-color: var(--btn-border-dark);
+  background-color: var(--btn-bg-dark);
+  color: var(--btn-color-dark);
+  box-shadow: 0 4px 8px var(--btn-shadow-dark);
+}
+
+body.dark .analyze-btn:hover {
+  background-color: var(--btn-hover-bg-dark);
+  color: var(--text-light);
+  box-shadow: 0 6px 15px var(--btn-shadow-dark);
 }
