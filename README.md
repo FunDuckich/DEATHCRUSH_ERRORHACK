@@ -3,7 +3,43 @@
 ## Структура проекта
 - | backend
     - | routers
-      - test.py
+      - init.py
     - main.py 
 - | frontend
-    - чё-то 
+    - | src
+      - | components
+        - FileUploadPanel.jsx
+        - Header.css
+        - Header.jsx
+        - ThemeSwitcher.css
+        - ThemeSwitcher.jsx
+      - | pages
+        - About.jsx
+        - Analyzer.jsx
+      - | public
+        - index.html
+      - | styles
+        - About.css
+        - Analyzer.css
+      - AnalysisContext.jsx
+      - App.jsx
+      - ThemeContext.jsx
+      - index.css
+      - main.jsx
+    - .gitignore
+    - README.md
+    - eslint.config.js
+    - index.html
+    - package-lock.json
+    - package.json
+    - postcss.config.cjs
+    - tailwind.config.js
+    - vite.config.js 
+- | services
+    - clustering.py
+    - postprocessing.py
+    - prepocessing.py
+- .gitignore
+- CONTRIBUTION.md
+- README.md
+- package-lock.json
