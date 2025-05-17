@@ -1,37 +1,59 @@
-/* Header.css */
+/* components/Header.css */
 header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  background-color: var(--header-bg);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-  font-family: 'Montserrat', sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem; /* Немного больше паддинг по бокам */
+    background-color: var(--header-bg-light); /* Глобальная переменная */
+    backdrop-filter: blur(8px); /* Чуть больше блюра */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07); /* Менее интенсивная тень */
+    transition: background-color 0.4s ease; /* Синхронизируем с body */
+    font-family: 'Montserrat', sans-serif;
+}
+
+body.dark header {
+    background-color: var(--header-bg-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 header nav {
-  display: flex;
-  gap: 1rem;
+    display: flex;
+    gap: 0.75rem; /* Чуть меньше гэп */
 }
 
 header nav a {
-  text-decoration: none;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  color: var(--link-color);
-  transition: color 0.3s ease, background-color 0.3s ease;
+    text-decoration: none;
+    padding: 0.6rem 0.9rem; /* Скорректировал паддинги */
+    border-radius: 6px; /* Менее скругленные */
+    color: var(--link-color-light); /* Глобальная */
+    font-weight: 500; /* Немного жирнее для обычных ссылок */
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+body.dark header nav a {
+    color: var(--link-color-dark);
 }
 
 header nav a:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.04); /* Очень легкий фон при ховере */
+    color: var(--link-active-light); /* Акцентный цвет при ховере */
+}
+
+body.dark header nav a:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--link-active-dark);
 }
 
 header nav a.active {
-  font-weight: bold;
-  color: var(--link-active);
+    font-weight: 700; /* Активная ссылка жирнее */
+    color: var(--link-active-light);
+    background-color: rgba(0, 102, 204, 0.08); /* Легкий фон для активной ссылки */
+}
+
+body.dark header nav a.active {
+    color: var(--link-active-dark);
+    background-color: rgba(77, 171, 247, 0.1);
 }
