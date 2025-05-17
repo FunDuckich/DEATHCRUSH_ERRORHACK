@@ -8,7 +8,7 @@ def group_by_cluster(df: pd.DataFrame) -> List[Dict[str, Any]]:
     for cluster_id, group in df.groupby("cluster"):
         files = group[["filename", "error"]].to_dict(orient="records")
         grouped.append({
-            "cluster": int(cluster_id),
+            "cluster": "",
             "files": files
         })
 

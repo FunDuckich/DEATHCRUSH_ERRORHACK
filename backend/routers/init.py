@@ -20,7 +20,7 @@ class ErrorEntry(BaseModel):
 
 
 class ClusterGroup(BaseModel):
-    cluster: int
+    cluster: str
     files: List[ErrorEntry]
 
 
