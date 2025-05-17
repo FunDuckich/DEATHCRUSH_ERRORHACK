@@ -1,75 +1,61 @@
-import React, { useState } from 'react';
-import '../styles/Analyzer.css';
+import {useLocation, useNavigate} from 'react-router-dom'
+import React, {useEffect} from 'react'
 
 export default function Analyzer() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+    const location = useLocation()
+    const navigate = useNavigate()
+    const data = location.state
 
-  async function handleAnalyzeClick() {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch('/analyze');
-      if (!res.ok) throw new Error(`Ошибка: ${res.status}`);
-      const json = await res.json();
-      setData(json);
-    } catch (err) {
-      setError(err.message);
-      setData(null);
-    } finally {
-      setLoading(false);
-    }
-  }
+    useEffect(() => {
+        if (!data) {
+            navigate('/')
+        }
+    }, [data, navigate])
 
-  return (
-    <main className="analyzer-wrapper">
-      <section className="analyzer-content">
-        <h1 className="analyzer-title">Анализ логов</h1>
-        <button onClick={handleAnalyzeClick} disabled={loading}>
-          {loading ? 'Загрузка...' : 'Запустить анализ'}
-        </button>
+    if (!data) return null
 
-        {error && <div style={{ color: 'red', marginTop: '1rem' }}>Ошибка: {error}</div>}
+    return (
+        <div style={{padding: '2rem'}}>
+            <h1>Результаты анализа</h1>
 
-        {!data && !loading && (
-          <div style={{ marginTop: '1rem' }}>Панель пуста. Нажмите кнопку для анализа.</div>
-        )}
+            {Array.isArray(data) && data.length > 0 ? (
+                data.map((cluster, idx) => (
+                    <div
+                        key={idx}
+                        style={{
+                            border: '1px solid #ccc',
+                            marginBottom: '1rem',
+                            padding: '1rem',
+                            borderRadius: '8px',
+                            backgroundColor: '#f9f9f9'
+                        }}
+                    >
+                        <h2>Кластер: {cluster.cluster || 'Без имени'}</h2>
 
-        {data && (
-          <div className="clusters-list">
-            {data.map((clusterObj, i) => (
-              <div key={i} className="cluster">
-                <h2>Кластер: {clusterObj.cluster}</h2>
-                <ul>
-                  {clusterObj.files.map((file, j) => (
-                    <li key={j}>
-                      <strong>Файл:</strong> {file.filename} <br />
-                      <strong>Hash:</strong> {file.hash} <br />
-                      <strong>Epoch:</strong> {file.epoch} <br />
-                      <strong>Version:</strong> {file.version} <br />
-                      <strong>Release:</strong> {file.release} <br />
-                      <strong>Arch:</strong> {file.arch} <br />
-                      <strong>Updated:</strong> {file.updated} <br />
-                      <strong>Ftbfs since:</strong> {file.ftbfs_since} <br />
-                      <strong>Url:</strong>{' '}
-                      <a href={file.url} target="_blank" rel="noreferrer">
-                        {file.url}
-                      </a>{' '}
-                      <br />
-                      {file.error && (
-                        <span style={{ color: 'red' }}>
-                          <strong>Ошибка:</strong> {file.error}
-                        </span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-    </main>
-  );
+                        {cluster.files.map((file, i) => (
+                            <div
+                                key={i}
+                                style={{
+                                    borderTop: '1px solid #ddd',
+                                    marginTop: '0.5rem',
+                                    paddingTop: '0.5rem'
+                                }}
+                            >
+                                <p><strong>Файл:</strong> {file.filename}</p>
+                                <p><strong>Hash:</strong> {file.hash}</p>
+                                <p><strong>Версия:</strong> {file.version}-{file.release}</p>
+                                <p><strong>Архитектура:</strong> {file.arch}</p>
+                                <p><strong>Обновлено:</strong> {file.updated}</p>
+                                <p><strong>Ошибка:</strong> {file.error || 'Нет данных'}</p>
+                                <p><strong>URL:</strong> <a href={file.url} target="_blank"
+                                                            rel="noreferrer">{file.url}</a></p>
+                            </div>
+                        ))}
+                    </div>
+                ))
+            ) : (
+                <p>Нет данных для отображения.</p>
+            )}
+        </div>
+    )
 }
