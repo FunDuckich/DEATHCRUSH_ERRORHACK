@@ -11,5 +11,4 @@ def cluster(df: pd.DataFrame) -> pd.DataFrame:
     clusters_names_map = dict(zip(clusters_info["Topic"], clusters_info["Name"]))
     topic_names = [clusters_names_map.get(topic, "Unknown") for topic in clusters]
     df["cluster"] = topic_names
-
     return df
