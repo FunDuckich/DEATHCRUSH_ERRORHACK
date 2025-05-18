@@ -42,4 +42,18 @@
 - .gitignore
 - CONTRIBUTION.md
 - README.md
-- package-lock.json
+- package-lock.json  
+
+## Сборка проекта  
+# Бэкенд  
+Python 3.11 обязательно (не выше)  
+1. `pip install -r requirements.txt`  
+2. Положить [дообученную модель BERTopic](https://drive.google.com/file/d/1kPnhQgNoj-_GUyKkrH-a5CZrkXBzYJrA/view) в папку services, переименовав файл в "model"
+3. `uvicorn backend.main:app`
+# Фронтенд  
+Нужен Node.js на компе, react, все дела
+1. `cd .\frontend\`
+2. `npm install`
+3. `npm run dev`
+# Общее  
+Бэк должен быть на порту 8000, фронт на 5173  
