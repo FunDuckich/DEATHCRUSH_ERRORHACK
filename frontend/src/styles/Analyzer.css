@@ -1,118 +1,291 @@
+/* styles/Analyzer.css */
+
+/* Локальные переменные для Analyzer, если они не покрываются глобальными
+   или требуют специфических значений. В данном случае большинство
+   должно браться из index.css (--bg-light, --text-light, --card-bg-light и т.д.)
+*/
+/*
 :root {
-  --transition-speed: 0.3s;
-
-  /* Светлая тема */
-  --bg-light: #f4f6f8;
-  --card-light: #ffffff;
-  --text-light: #222;
-
-  /* Тёмная тема */
-  --bg-dark: #1f1f1f;
-  --card-dark: #2a2a2a;
-  --text-dark: #f5f5f5;
+    --transition-speed: 0.3s; // Уже есть (не переменная, но можно вынести, если нужно)
 }
+*/
 
 .analyzer-wrapper {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--bg-light);
-  padding: 2rem;
-  transition: background-color var(--transition-speed) ease;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: var(--bg-light); /* Глобальная */
+    padding: 2rem;
+    transition: background-color 0.4s ease; /* Синхронизируем с body */
+    font-family: 'Inter', 'Montserrat', sans-serif; /* Наследуется от body */
+    color: var(--text-light); /* Глобальная */
 }
 
 body.dark .analyzer-wrapper {
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
 }
 
 .analyzer-content {
-  background-color: var(--card-light);
-  padding: 2rem 3rem;
-  border-radius: 1rem;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
-  max-width: 700px;
-  width: 100%;
-  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
-  color: var(--text-light);
+    background-color: var(--card-bg-light); /* Глобальная, но для карточек анализа, может быть своя */
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1); /* Тень может быть своя */
+    border: 1px solid var(--card-border-light);
+    max-width: 900px;
+    width: 100%;
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    color: var(--text-light); /* Наследуется от wrapper, но можно уточнить */
 }
 
 body.dark .analyzer-content {
-  background-color: var(--card-dark);
-  color: var(--text-dark);
+    background-color: var(--card-bg-dark);
+    border-color: var(--card-border-dark);
+    color: var(--text-dark);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
 .analyzer-title {
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
-  font-weight: 600;
-  text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 700; /* Чуть жирнее */
+    text-align: center;
+    color: var(--text-light); /* Явно */
 }
 
-button {
-  background-color: #4e8ef7;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color var(--transition-speed);
-  font-size: 1rem;
+body.dark .analyzer-title {
+    color: var(--text-dark);
 }
 
-button:hover:not(:disabled) {
-  background-color: #3c78dc;
-}
-
-button:disabled {
-  background-color: #9dbcf9;
-  cursor: not-allowed;
-}
 
 .clusters-list {
-  margin-top: 1.5rem;
+    margin-top: 1.5rem;
 }
 
-.cluster {
-  margin-bottom: 2rem;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  background-color: rgba(0, 0, 0, 0.03);
+.cluster-item {
+    margin-bottom: 1rem;
+    border: 1px solid var(--card-border-light);
+    border-radius: 0.75rem; /* Чуть меньше, чем у основной карточки */
+    background-color: var(--card-bg-light); /* Можно чуть другой фон, например --subtle-bg-light */
+    /* background-color: var(--subtle-bg-light); */
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+    overflow: hidden; /* Чтобы скругление работало для вложенных элементов */
 }
 
-body.dark .cluster {
-  background-color: rgba(255, 255, 255, 0.05);
+body.dark .cluster-item {
+    border-color: var(--card-border-dark);
+    background-color: var(--card-bg-dark);
+    /* background-color: var(--subtle-bg-dark); */
 }
 
-.cluster h2 {
-  margin-bottom: 1rem;
-  font-size: 1.25rem;
+.cluster-header,
+.file-header {
+    padding: 0.8rem 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    position: relative;
+    user-select: none;
 }
 
-.cluster ul {
-  padding-left: 1rem;
+.cluster-header:focus-visible, .file-header:focus-visible { /* Используем focus-visible для лучшей доступности */
+    outline: 2px solid var(--accent-1);
+    outline-offset: -2px;
+    z-index: 1; /* Чтобы обводка была поверх */
 }
 
-.cluster li {
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid #ccc;
+
+.cluster-header:hover {
+    background-color: rgba(0, 0, 0, 0.03); /* Можно использовать var(--subtle-bg-light) но чуть темнее */
 }
 
-body.dark .cluster li {
-  border-bottom: 1px solid #555;
+body.dark .cluster-header:hover {
+    background-color: rgba(255, 255, 255, 0.04);
 }
+
+.file-header {
+    padding-left: 1.8rem;
+}
+
+.file-header:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+body.dark .file-header:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+
+.cluster-header h2 {
+    margin: 0;
+    margin-left: 1.2rem; /* Отступ для текста после псевдоэлемента-стрелки */
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+body.dark .cluster-header h2 {
+    color: var(--text-dark);
+}
+
+.file-header strong {
+    font-weight: 500;
+    color: var(--text-light);
+    margin-left: 1.2rem; /* Отступ для текста после псевдоэлемента-стрелки */
+}
+
+body.dark .file-header strong {
+    color: var(--text-dark);
+}
+
+
+.cluster-header::before,
+.file-header::before {
+    content: '►';
+    display: inline-block;
+    position: absolute;
+    left: 0.7rem; /* Единый отступ для стрелки */
+    font-size: 0.8em;
+    transition: transform 0.2s ease-in-out;
+    color: var(--text-light); /* Используем основной цвет текста для стрелки */
+}
+
+body.dark .cluster-header::before,
+body.dark .file-header::before {
+    color: var(--text-dark);
+}
+
+.cluster-header.opened::before,
+.file-header.opened::before {
+    transform: rotate(90deg);
+}
+
+
+.files-list {
+    padding-left: 0;
+    margin-top: 0;
+    list-style: none;
+    border-top: 1px solid var(--card-border-light);
+}
+
+body.dark .files-list {
+    border-top-color: var(--card-border-dark);
+}
+
+.file-item + .file-item .file-header {
+    border-top: 1px dashed rgba(0, 0, 0, 0.07); /* Более тонкий разделитель */
+}
+
+body.dark .file-item + .file-item .file-header {
+    border-top-color: rgba(255, 255, 255, 0.07);
+}
+
+
+.file-details {
+    padding: 0.8rem 1.2rem 0.8rem 2.8rem; /* Отступ слева, учитывающий отступ file-header и стрелку */
+    background-color: var(--subtle-bg-light);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--card-border-light);
+    color: var(--text-light);
+}
+
+body.dark .file-details {
+    background-color: var(--subtle-bg-dark);
+    border-top-color: var(--card-border-dark);
+    color: var(--text-dark);
+}
+
+.file-details p {
+    margin: 0.4rem 0; /* Чуть больше отступы */
+}
+
+.file-details p strong {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+body.dark .file-details p strong {
+    color: var(--text-dark);
+}
+
+.file-details a {
+    color: var(--accent-1); /* Используем акцентный цвет для ссылок */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.file-details a:hover {
+    text-decoration: underline;
+    color: var(--accent-2); /* Можно другой акцент при ховере */
+}
+
+body.dark .file-details a {
+    color: var(--accent-1); /* Может потребоваться более светлый оттенок accent-1 для темной темы, если он сам по себе темный */
+}
+
+body.dark .file-details a:hover {
+    color: var(--accent-2); /* Аналогично */
+}
+
+
+.no-files-message {
+    padding: 0.8rem 1.2rem 0.8rem 1.8rem;
+    font-style: italic;
+    color: #777; /* Чуть темнее для светлой темы */
+    border-top: 1px solid var(--card-border-light);
+}
+
+body.dark .no-files-message {
+    color: #888; /* Чуть светлее для темной темы */
+    border-top-color: var(--card-border-dark);
+}
+
 
 /* Адаптивность */
-@media (max-width: 480px) {
-  .analyzer-content {
-    padding: 1.5rem;
-  }
+@media (max-width: 768px) {
+    /* Более общая точка для планшетов */
+    .analyzer-content {
+        padding: 1.5rem 2rem;
+    }
+}
 
-  .analyzer-title {
-    font-size: 1.5rem;
-  }
+@media (max-width: 480px) {
+    .analyzer-wrapper {
+        padding: 1rem;
+    }
+
+    .analyzer-content {
+        padding: 1rem 1.2rem;
+    }
+
+    .analyzer-title {
+        font-size: 1.6rem;
+    }
+
+    .cluster-header h2 {
+        font-size: 1.05rem;
+    }
+
+    .file-header strong {
+        font-size: 0.95rem;
+    }
+
+    .file-details {
+        padding-left: 2rem;
+        font-size: 0.85rem;
+    }
+
+    .cluster-header::before, .file-header::before {
+        left: 0.5rem;
+    }
+
+    .cluster-header h2, .file-header strong {
+        margin-left: 1rem;
+    }
+
+    .no-files-message {
+        padding-left: 1.2rem;
+    }
 }
